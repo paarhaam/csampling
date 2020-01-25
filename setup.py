@@ -39,15 +39,15 @@ REQUIREMENTS = ["sobol_seq", "numpy"]
 SETUP_REQUIREMENTS = []
 
 setup(
-    name="sampling",
+    name="csampling",
     version=VERSION,
-    description="This package implements sampling methods, usefull for simulation analysis.",
+    description="This package implements sampling methods, useful for simulation analysis.",
     long_description=Path("README.md").read_text(),
     long_description_content_type="text/markdown",
     author="paarhaam",
     author_email="paarhaam@yahoo.com",
     url="https://github.com/paarhaam/csampling",
-    packages=["sampling"],
+    packages=["csampling"],
     package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,

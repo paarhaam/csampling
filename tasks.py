@@ -79,7 +79,7 @@ def build(context):
 def publish(context):
     """ Publish to pypi """
 
-    context.run(f" twine upload --repository-url https://test.pypi.org/legacy/ dist/*")
+    context.run(f" twine upload --verbose --repository-url https://test.pypi.org/legacy/ dist/*")
 
 
 @invoke.task
