@@ -23,6 +23,7 @@ def on_rm_error(func, path, exc_info) -> None:
     os.chmod(path, stat.S_IWRITE)
     os.unlink(path)
 
+
 @invoke.task
 def uninstall(context):
     """ Uninstall package to scan test coverage. """
@@ -45,6 +46,7 @@ def scan(context):
     context.run(f"{VENV_PYTEST} --color=yes --verbose --cov-report=xml --cov=src", echo=True)
     context.run(f"{VENV_COVERAGE} report --fail-under=80 -m", echo=True)
 
+
 @invoke.task
 def test(context):
     """ Runs unit test """
@@ -57,19 +59,11 @@ def setversion(context, version="development"):
     """ Sets __version in __init__.py """
 
     for dunder in Path("src").glob("**/__init__.py"):
-        dunder.write_text(
-            re.sub(
-                r"__version__\ *=\ *\".+\"",
-                f'__version__ = "{version}"',
-                dunder.read_text(),
-            )
-        )
+        dunder.write_text(re.sub(r"__version__\ *=\ *\".+\"", f'__version__ = "{version}"', dunder.read_text(),))
         print(f" Version set to '{version}' in '{dunder}'")
 
     setuppy = Path("setup.py")
-    setuppy.write_text(
-        re.sub(r"VERSION\ *=\ *\".+\"", f'VERSION = "{version}"', setuppy.read_text())
-    )
+    setuppy.write_text(re.sub(r"VERSION\ *=\ *\".+\"", f'VERSION = "{version}"', setuppy.read_text()))
 
     print(f" Version set to '{version}' in '{setuppy}'")
 
@@ -78,15 +72,15 @@ def setversion(context, version="development"):
 def build(context):
     """ Builds a wheel and source distribution archive """
 
-    context.run(f"{VENV_PYTHON} setup.py bdist_wheel")
+    context.run(f"{VENV_PYTHON} setup.py sdist bdist_wheel")
 
 
 @invoke.task
 def publish(context):
-    """ Publish to artifactory """
+    """ Publish to pypi """
 
-    for filepath in Path(Path(__file__).parent / "dist").glob("*.whl"):
-        context.run(f" ./jfrog rt upload {filepath} your/URL")
+    context.run(f" twine upload --repository-url https://test.pypi.org/legacy/ dist/*")
+
 
 @invoke.task
 def clean(context, deps=False):
@@ -129,6 +123,7 @@ def fmtcheck(context):
 @invoke.task
 def typecheck(context):
     """ Runs type checker """
+
     def mypy(context, directory):
         for dirpath, _, filenames in os.walk(os.path.join(os.getcwd(), directory)):
             for filename in filenames:
@@ -142,7 +137,6 @@ def typecheck(context):
 @invoke.task
 def lint(context):
     """ Runs pyflakes and pylint """
-
 
     context.run(f"{VENV_PYFLAKES} ./src ./test", echo=True)
 

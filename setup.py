@@ -30,11 +30,12 @@ def remove_dirs_and_files(rm_dist=False):
         elif os.path.isfile(d):
             os.remove(d)
 
+
 remove_dirs_and_files(True)
 
 VERSION = "0.0.1"
 
-REQUIREMENTS = ['sobol_seq', 'numpy']
+REQUIREMENTS = ["sobol_seq", "numpy"]
 SETUP_REQUIREMENTS = []
 
 setup(
@@ -45,7 +46,7 @@ setup(
     long_description_content_type="text/markdown",
     author="paarhaam",
     author_email="paarhaam@yahoo.com",
-    url="/depo",
+    url="https://github.com/paarhaam/csampling",
     packages=["sampling"],
     package_dir={"": "src"},
     include_package_data=True,
