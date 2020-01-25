@@ -33,9 +33,9 @@ def remove_dirs_and_files(rm_dist=False):
 
 remove_dirs_and_files(True)
 
-VERSION = "0.0.1"
+VERSION = "0.0.3"
 
-REQUIREMENTS = ["sobol_seq", "numpy"]
+REQUIREMENTS = ["sobol-seq>=0.1.2", "numpy>=1.18.1"]
 SETUP_REQUIREMENTS = []
 
 setup(
@@ -56,6 +56,7 @@ setup(
     setup_requires=SETUP_REQUIREMENTS,
     cmdclass={"build_py": build_py},
     python_requires=">=3.7",
+    license='MIT'
 )
 
 remove_dirs_and_files(False)
